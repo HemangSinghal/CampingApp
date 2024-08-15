@@ -1,0 +1,45 @@
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
+
+network Forwardingnetwork
+{
+    parameters:
+        int src;
+        int dest;
+        
+    submodules:
+        n[5]:Node
+        {
+        	id = index;
+        	source_address = parent.src;
+        	destination_address = parent.dest;
+        }
+    connections allowunconnected:
+        n[0].gout[0] --> {delay = 100ms;} --> n[1].gin[0];
+        
+        n[1].gout[0] --> {delay = 100ms;} --> n[0].gin[0];
+        n[1].gout[1] --> {delay = 200ms;} --> n[2].gin[0];
+        n[1].gout[2] --> {delay = 200ms;} --> n[3].gin[0];
+        
+        n[2].gout[0] --> {delay = 200ms;} --> n[1].gin[1];
+        n[2].gout[1] --> {delay = 100ms;} --> n[4].gin[0];
+        
+        n[3].gout[0] --> {delay = 200ms;} --> n[1].gin[2];
+        n[3].gout[1] --> {delay = 200ms;} --> n[4].gin[1];
+        
+        n[4].gout[0] --> {delay = 200ms;} --> n[2].gin[1];
+        n[4].gout[1] --> {delay = 100ms;} --> n[3].gin[1];
+        
+}

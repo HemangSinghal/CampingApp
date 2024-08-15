@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+
+void merge(int* a,int start,int mid,int end)
+{
+	int output[100]={0};
+	int i=start;
+	int j=mid+1;
+	int k=start;
+	while(i<=mid && j<=end)
+		{
+         if(a[i]<=a[j])
+         	output[k++]=a[i++];
+         else
+         	output[k++]=a[j++];
+		}
+
+		while(i<=mid)
+			output[k++]=a[i++];
+		while(j<=end)
+			output[k++]=a[j++];
+		for(int m=start;m<=end;m++)
+		{
+           a[m]=output[m];
+		}
+}
+void mergeSort(int* a,int n,int start,int end)
+{
+	if(n==1)
+		return;
+    int mid=(start+end)/2;
+    mergeSort(a,n/2,start,mid);
+    mergeSort(a,n/2,mid+1,end);
+    merge(a,start,mid,end);
+}
+
+int main()
+{
+	int arr[]={1,2,3,4,15,4,4,1};
+	int n=sizeof(arr)/sizeof(int);
+	mergeSort(arr,n,0,n-1);
+	for(int i=0;i<n;i++)
+		cout<<arr[i]<<' ';
+}
