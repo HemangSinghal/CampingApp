@@ -21,7 +21,7 @@ const MongoStore = require('connect-mongo');
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campground');
 const reviewRoutes = require('./routes/reviews')
-const db_url = 'mongodb://localhost:27017/yelp-camp';
+const db_url = process.env.MONGO_URL;
 
 mongoose.connect(db_url, {
     useNewUrlParser: true,
