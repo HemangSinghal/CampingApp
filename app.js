@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
-console.log(process.env.CLOUDINARY_KEY)
+
 
 const express = require('express')
 const app = express()
@@ -22,7 +22,7 @@ const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campground');
 const reviewRoutes = require('./routes/reviews')
 const db_url = process.env.MONGO_URL;
-
+const PORT = process.env.PORT || 3000;
 mongoose.connect(db_url, {
     useNewUrlParser: true,
 
@@ -89,7 +89,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log("Serving on port 3000")
 })
 app.get('/home', (req, res) => {
@@ -108,6 +108,6 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = 'Something went wrong' } = err;
-    res.status(statusCode).send(message);
+    res.status(statusCode).render('error', { err });
 
 })
