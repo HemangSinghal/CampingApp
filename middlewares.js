@@ -6,7 +6,7 @@ const Review = require('./models/review');
 const { reviewSchema } = require('./schemas.js');
 
 module.exports.isLoggedIn = (req, res, next) => {
-    console.log("REQ.USER...", req.user)
+
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl; // add this line
         req.flash('error', 'you must be signed in first');
